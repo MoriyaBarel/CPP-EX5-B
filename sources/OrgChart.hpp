@@ -54,7 +54,10 @@ namespace ariel
 
         OrgChart();
         OrgChart(const OrgChart &other);
+        OrgChart(OrgChart &&other) noexcept;
         ~OrgChart();
+        OrgChart &operator=(const OrgChart &other);
+        OrgChart &operator=(OrgChart &&other) noexcept;
         OrgChart &add_root(const std::string &root_name);
         OrgChart &add_sub(const std::string &boss_name, const std::string &sub_name);
         Iterator begin_level_order();
@@ -65,7 +68,6 @@ namespace ariel
         Iterator end_preorder();
         Iterator begin();
         Iterator end();
-        OrgChart &operator=(const OrgChart &other);
         friend std::ostream &operator<<(std::ostream &s_out, const OrgChart &org_chart); // cout
     };
 }

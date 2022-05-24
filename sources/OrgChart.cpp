@@ -28,7 +28,6 @@ Node::Node(const Node *other)
     }
 }
 
-
 // -----------------------------------------------------------------------------
 
 // -----------------------Iterator Implementation-------------------------------
@@ -99,23 +98,43 @@ OrgChart::OrgChart()
     this->root = nullptr;
 }
 
-OrgChart::OrgChart(const OrgChart &other)
+OrgChart &OrgChart::operator=(OrgChart &&other) noexcept
 {
-    this->root = nullptr;
-    *this = other;
+    *this = std::move(other);
+    return *this;
 }
 
 OrgChart &OrgChart::operator=(const OrgChart &other)
 {
     if (this != &other)
     {
-        this->root = new Node(other.root);
-        for (auto it = this->begin_level_order(); it != this->end_level_order(); ++it)
+        if (other.root == nullptr)
         {
-            this->all_nodes.push_back(it.get_node());
+            this->root = nullptr;
+        }
+        else
+        {
+            this->root = new Node(other.root);
+            for (auto it = this->begin_level_order(); it != this->end_level_order(); ++it)
+            {
+                Node *node = it.get_node();
+                this->all_nodes.push_back(node);
+            }
         }
     }
     return *this;
+}
+
+OrgChart::OrgChart(const OrgChart &other)
+{
+    this->root = nullptr;
+    *this = other;
+}
+
+OrgChart::OrgChart(OrgChart &&other) noexcept
+{
+    this->root = nullptr;
+    *this = other;
 }
 
 OrgChart::~OrgChart()
