@@ -54,10 +54,10 @@ namespace ariel
 
         OrgChart();
         OrgChart(const OrgChart &other);
-        OrgChart(OrgChart &&other) noexcept;
+        OrgChart(OrgChart &&other) noexcept = default;
         ~OrgChart();
         OrgChart &operator=(const OrgChart &other);
-        OrgChart &operator=(OrgChart &&other) noexcept;
+        OrgChart &operator=(OrgChart &&other) noexcept = default;
         OrgChart &add_root(const std::string &root_name);
         OrgChart &add_sub(const std::string &boss_name, const std::string &sub_name);
         Iterator begin_level_order();

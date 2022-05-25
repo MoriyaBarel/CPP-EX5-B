@@ -98,12 +98,6 @@ OrgChart::OrgChart()
     this->root = nullptr;
 }
 
-OrgChart &OrgChart::operator=(OrgChart &&other) noexcept
-{
-    *this = std::move(other);
-    return *this;
-}
-
 OrgChart &OrgChart::operator=(const OrgChart &other)
 {
     if (this != &other)
@@ -131,18 +125,12 @@ OrgChart::OrgChart(const OrgChart &other)
     *this = other;
 }
 
-OrgChart::OrgChart(OrgChart &&other) noexcept
-{
-    this->root = nullptr;
-    *this = other;
-}
-
 OrgChart::~OrgChart()
 {
     for (Node *ptr : this->all_nodes)
     {
         delete ptr;
-    }
+    } 
 }
 
 void OrgChart::check_errors()
@@ -327,6 +315,11 @@ namespace ariel
 
     std::ostream &operator<<(std::ostream &s_out, const OrgChart &org_chart)
     {
+        for (uint i = 0; i < org_chart.all_nodes.size(); i++)
+        {
+            s_out << org_chart.all_nodes[i]->name << " ";
+        }
+        
         return s_out;
     }
 
